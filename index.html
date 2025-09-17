@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Carbon Credit Blockchain</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    /* Download Button */
+    .download-button {
+      display: inline-block;
+      padding: 12px 24px;
+      background: linear-gradient(90deg, #00d4ff, #ff6ec7); /* Gradient background */
+      color: #ffffff;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .download-button:hover {
+      background: linear-gradient(90deg, #ff6ec7, #00d4ff); /* Reverse gradient on hover */
+      transform: scale(1.05); /* Slight zoom effect */
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center;">🌍 Carbon Credit Blockchain</h1>
+
+  <!-- Container for Form and Blockchain -->
+  <div class="main-container">
+    <!-- Credit Input Form -->
+    <div class="form-container">
+      <form id="creditForm">
+        <h2>Add New Credit</h2>
+        <label>Issuer:</label>
+        <input type="text" name="issuer" required>
+
+        <label>Project:</label>
+        <input type="text" name="project" required>
+
+        <label>Verifier:</label>
+        <input type="text" name="verifier" required>
+
+        <label>Amount:</label>
+        <input type="number" name="amount" required>
+
+        <label>Country:</label>
+        <input type="text" name="country" required>
+
+        <button type="submit">Add Credit & Mine Block</button>
+      </form>
+
+      <!-- Mining Animation -->
+      <div id="loading">
+        <div class="spinner"></div>
+        ⛏️ Mining block... please wait...
+      </div>
+    </div>
+
+    <!-- Blockchain Display -->
+    <div class="blockchain-container">
+      <h2 style="text-align:center;">📖 Blockchain Ledger</h2>
+      <div id="chainContainer"></div>
+
+      <!-- Download Button -->
+      <div style="text-align: center; margin-top: 20px;">
+        <a href="/download_chain" class="download-button">⬇️ Download Blockchain Data</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load blockchain chain data into the page
+    async function loadChain() {
+      const response = await fetch('/chain.json');
+      const data = await response.json();
+      const container = document.getElementById('chainContainer');
+      container.innerHTML = "";
+
+      data.chain.forEach(block => {
+        const div = document.createElement('div');
+        div.className = 'block';
+        div.innerHTML = `
+          <h2>Block #${block.index}</h2>
+          <p><b>Timestamp:</b> ${block.timestamp}</p>
+          <p><b>Previous Hash:</b> ${block.previous_hash}</p>
+          <p><b>Nonce:</b> ${block.nonce}</p>
+          <p><b>Hash:</b> ${block.hash || "—"}</p>
+          <h3>Credits:</h3>
+          ${
+            block.credits.length
+              ? "<ul>" + block.credits.map(c =>
+                `<li>
+                  <b>Issuer:</b> ${c.issuer} |
+                  <b>Project:</b> ${c.project} |
+                  <b>Verifier:</b> ${c.verifier} |
+                  <b>Amount:</b> ${c.amount} |
+                  <b>Country:</b> ${c.country}
+                </li>`).join("") + "</ul>"
+              : "<p><i>No credits in this block.</i></p>"
+          }
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    // Handle form submit
+    document.getElementById('creditForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      document.getElementById('loading').style.display = 'block';
+
+      const formData = new FormData(this);
+      const payload = Object.fromEntries(formData.entries());
+
+      const response = await fetch('/add_credit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      const result = await response.json();
+      alert(`✅ Block mined!\nNonce: ${result.nonce}\nHash: ${result.hash}`);
+
+      document.getElementById('loading').style.display = 'none';
+      this.reset();
+      loadChain();
+    });
+
+    // Load chain initially
+    loadChain();
+  </script>
+</body>
+</html>

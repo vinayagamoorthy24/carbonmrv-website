@@ -1,0 +1,168 @@
+/* General Styles */
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #232323, #202020); /* Gradient background */
+  color: #f9f9f9; /* Light text color for contrast */
+}
+
+h1, h2, h3 {
+  text-align: center;
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow for text */
+}
+
+a {
+  color: #00d4ff; /* Vibrant blue for links */
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+a:hover {
+  color: #ff6ec7; /* Pink hover effect */
+}
+
+/* Form Styles */
+form {
+  background: rgba(255, 255, 255, 0.1); /* Transparent white background */
+  padding: 24px 32px;
+  border-radius: 12px;
+  max-width: 400px;
+  margin: 32px auto;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Elevated shadow */
+  backdrop-filter: blur(10px); /* Glassmorphism effect */
+}
+
+form h2 {
+  margin-bottom: 16px;
+  font-size: 1.8em;
+  color: #ffffff;
+}
+
+form label {
+  font-size: 1em;
+  color: #e0e0e0;
+  margin-bottom: 8px;
+  display: block;
+}
+
+form input, form button {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0 18px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+form input {
+  background: rgba(255, 255, 255, 0.2); /* Transparent input background */
+  color: #ffffff;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+form input:focus {
+  border: 1px solid #00d4ff;
+  box-shadow: 0 0 8px #00d4ff;
+  outline: none;
+}
+
+form button {
+  background: linear-gradient(90deg, #00d4ff, #ff6ec7); /* Gradient button */
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+form button:hover {
+  background: linear-gradient(90deg, #ff6ec7, #00d4ff);
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Loading Animation */
+#loading {
+  display: none;
+  color: #00d4ff;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+  animation: blink 1.5s infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Main Container */
+.main-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Form Container */
+.form-container {
+  flex: 1;
+  max-width: 50%;
+  margin: auto; /* Center the form horizontally */
+  text-align: center; /* Align content inside the form */
+  margin-top: -2.5%;
+}
+
+/* Blockchain Container */
+.blockchain-container {
+  flex: 2;
+  max-width: 55%;
+  max-height: 80vh;
+  background: rgba(255, 255, 255, 0.1); /* Transparent white background */
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  padding: 16px;
+  backdrop-filter: blur(10px); /* Glassmorphism effect */
+  overflow: auto; /* Allow scrolling but hide the scrollbar */
+}
+
+/* Blockchain Blocks */
+.block {
+  background: rgba(255, 255, 255, 0.2); /* Transparent block background */
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  border-left: 6px solid #00d4ff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+.block:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+}
+
+.block h2 {
+  color: #00d4ff;
+  font-size: 1.2em;
+  margin-bottom: 8px;
+}
+
+.block p, .block li {
+  color: #e0e0e0;
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+ul {
+  padding-left: 18px;
+}
+
+/* Hide the scrollbar */
+.blockchain-container::-webkit-scrollbar {
+  display: none;
+}
